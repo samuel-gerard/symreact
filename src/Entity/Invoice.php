@@ -19,7 +19,7 @@ class Invoice
     /**
      * @ORM\Column(type="float")
      */
-    private $amout;
+    private $amount;
 
     /**
      * @ORM\Column(type="datetime")
@@ -47,14 +47,14 @@ class Invoice
         return $this->id;
     }
 
-    public function getAmout(): ?float
+    public function getAmount(): ?float
     {
-        return $this->amout;
+        return $this->amount;
     }
 
-    public function setAmout(float $amout): self
+    public function setamount(float $amount): self
     {
-        $this->amout = $amout;
+        $this->amount = $amount;
 
         return $this;
     }
