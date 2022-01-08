@@ -8,10 +8,14 @@ use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
  * @ApiResource
+ * @UniqueEntity("email")
  */
 class User implements UserInterface
 {
@@ -25,6 +29,8 @@ class User implements UserInterface
     /**
      * @ORM\Column(type="string", length=180, unique=true)
      * @Groups({"customers_read", "invoices_read", "invoices_subresource"})
+     * @Assert\NotBlank(message="User email is mandatory")
+     * @Assert\Email(message="Email format must be valid")
      */
     private $email;
 
@@ -36,18 +42,23 @@ class User implements UserInterface
     /**
      * @var string The hashed password
      * @ORM\Column(type="string")
+     * @Assert\NotBlank(message="Password is mandatory")
      */
     private $password;
 
     /**
      * @ORM\Column(type="string", length=255)
      * @Groups({"customers_read", "invoices_read", "invoices_subresource"})
+     * @Assert\NotBlank(message="User first name is mandatory")
+     * @Assert\Length(min=3, minMessage="First name must be between 3 and 255 car", max=255, maxMessage="First name must be between 3 and 255 car")
      */
     private $firstName;
 
     /**
      * @ORM\Column(type="string", length=255)
      * @Groups({"customers_read", "invoices_read", "invoices_subresource"})
+     * @Assert\NotBlank(message="User last name is mandatory")
+     * @Assert\Length(min=3, minMessage="Last name must be between 3 and 255 car", max=255, maxMessage="Last name must be between 3 and 255 car")
      */
     private $lastName;
 
